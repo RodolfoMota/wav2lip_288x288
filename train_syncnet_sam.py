@@ -44,7 +44,6 @@ print('use_cuda: {}'.format(use_cuda))
 syncnet_T = 5
 syncnet_mel_step_size = 16
 format_video = 'mov'
-hparams.set_hparam("img_size", 384)
 
 # mel augmentation
 def mask_mel(crop_mel):
@@ -106,7 +105,7 @@ class Dataset(object):
             vidname = self.all_videos[idx]
             img_names = list(glob(join(vidname, '*.jpg')))
                 
-            # print("len(img_names)):", len(img_names))
+            print("len(img_names)):", len(img_names))
             if len(img_names) <= 3 * syncnet_T:
                 continue
             
@@ -376,7 +375,6 @@ def run():
 
     train_dataset = Dataset('filelists/train.txt')
     test_dataset = Dataset('filelists/test.txt')
-    hparams.set_hparam("syncnet_batch_size", 64)
     train_data_loader = data_utils.DataLoader(
         train_dataset, batch_size=hparams.syncnet_batch_size, shuffle=True,
         num_workers=hparams.num_workers,
